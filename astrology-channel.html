@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ਤਾਰਿਆਂ ਦੀ ਗੱਲ – Punjabi Astrology</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@300;400;600;700&family=Cinzel:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --deep-night: #0A0612;
+    --cosmic-purple: #1A0A2E;
+    --saffron:       #FF8C00;
+    --gold:          #D4A017;
+    --pale-gold:     #F5DEB3;
+    --marigold:      #FFAA33;
+    --silver-mist:   #C8B8D8;
+    --stardust:      #E8E0F0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--deep-night);
+    color: var(--stardust);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── STAR FIELD ── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(1px 1px at 10% 15%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 40% 30%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 80%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 20%, #fff 0%, transparent 100%),
+      radial-gradient(2px 2px at 80% 50%, rgba(255,200,100,.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 75%, rgba(255,255,255,.9) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 60% 45%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 10%, rgba(255,255,255,.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 35%, rgba(200,180,255,.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5%  55%, #fff 0%, transparent 100%),
+      radial-gradient(1px 1px at 95% 10%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 70%, rgba(255,170,50,.6) 0%, transparent 100%),
+      var(--deep-night);
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(10, 6, 18, .85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,160,23,.2);
+  }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: .75rem;
+  }
+
+  .brand-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 16px rgba(255,140,0,.4);
+  }
+
+  .brand-name {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--pale-gold);
+    letter-spacing: .02em;
+  }
+
+  .brand-sub {
+    font-size: .65rem; color: var(--silver-mist);
+    letter-spacing: .12em; text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); text-decoration: none;
+    font-size: .85rem; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--marigold); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: var(--deep-night) !important;
+    padding: .45rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600 !important;
+    font-size: .8rem !important;
+    transition: box-shadow .2s !important;
+  }
+  .nav-cta:hover { box-shadow: 0 0 20px rgba(255,140,0,.5); color: var(--deep-night) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 92vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 4rem 1.5rem 3rem;
+    overflow: hidden;
+  }
+
+  /* Mandala glow behind hero */
+  .hero::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 680px; height: 680px;
+    background: radial-gradient(ellipse, rgba(212,160,23,.12) 0%, rgba(26,10,46,.0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  /* Rotating mandala ring */
+  .mandala {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; height: 500px;
+    border: 1px solid rgba(212,160,23,.1);
+    border-radius: 50%;
+    animation: spin 60s linear infinite;
+    pointer-events: none;
+  }
+  .mandala::before {
+    content: '';
+    position: absolute; inset: 30px;
+    border: 1px solid rgba(255,140,0,.08);
+    border-radius: 50%;
+  }
+  .mandala::after {
+    content: '';
+    position: absolute; inset: 70px;
+    border: 1px solid rgba(212,160,23,.15);
+    border-radius: 50%;
+  }
+  @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem; letter-spacing: .25em;
+    color: var(--marigold); text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .hero-title {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(160deg, #fff 20%, var(--pale-gold) 55%, var(--saffron) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: .5rem;
+  }
+
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    color: var(--silver-mist);
+    letter-spacing: .08em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-desc {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: clamp(.95rem, 2vw, 1.15rem);
+    color: var(--silver-mist);
+    max-width: 560px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-buttons {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: var(--deep-night);
+    padding: .85rem 2.2rem;
+    border-radius: 30px;
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-weight: 700; font-size: 1rem;
+    text-decoration: none;
+    box-shadow: 0 0 24px rgba(255,140,0,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 36px rgba(255,140,0,.55); }
+
+  .btn-secondary {
+    border: 1px solid rgba(212,160,23,.4);
+    color: var(--pale-gold);
+    padding: .85rem 2.2rem;
+    border-radius: 30px;
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
+  }
+  .btn-secondary:hover { border-color: var(--marigold); color: var(--marigold); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 3.5rem; flex-wrap: wrap; justify-content: center;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem; font-weight: 700;
+    color: var(--marigold);
+  }
+  .stat-label {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .78rem; color: var(--silver-mist);
+    margin-top: .2rem;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,160,23,.3), transparent);
+    margin: 0 auto;
+  }
+
+  /* ── ZODIAC WHEEL ── */
+  .zodiac-section {
+    position: relative; z-index: 1;
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  .section-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: .68rem; letter-spacing: .3em;
+    color: var(--marigold); text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 600;
+    color: var(--pale-gold);
+    margin-bottom: .75rem;
+  }
+
+  .section-body {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist);
+    max-width: 520px; margin: 0 auto 3rem;
+    line-height: 1.8; font-size: .95rem;
+  }
+
+  .rashi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .rashi-card {
+    background: rgba(26,10,46,.6);
+    border: 1px solid rgba(212,160,23,.15);
+    border-radius: 12px;
+    padding: 1.2rem .8rem;
+    cursor: pointer;
+    transition: border-color .25s, transform .25s, background .25s;
+  }
+  .rashi-card:hover {
+    border-color: rgba(255,140,0,.5);
+    background: rgba(255,140,0,.07);
+    transform: translateY(-3px);
+  }
+
+  .rashi-symbol {
+    font-size: 1.8rem; margin-bottom: .4rem;
+  }
+
+  .rashi-name {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    color: var(--pale-gold);
+  }
+
+  .rashi-en {
+    font-size: .68rem; color: var(--silver-mist); margin-top: .15rem;
+  }
+
+  /* ── VIDEO SECTION ── */
+  .videos-section {
+    position: relative; z-index: 1;
+    padding: 4rem 1.5rem;
+    background: rgba(26,10,46,.35);
+  }
+
+  .videos-section .section-title { text-align: center; }
+  .videos-section .section-eyebrow { text-align: center; }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px; margin: 0 auto;
+  }
+
+  .video-card {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid rgba(212,160,23,.12);
+    background: rgba(10,6,18,.7);
+    transition: transform .25s, border-color .25s;
+  }
+  .video-card:hover { transform: translateY(-4px); border-color: rgba(255,140,0,.35); }
+
+  .video-thumb {
+    position: relative;
+    aspect-ratio: 16/9;
+    background: var(--cosmic-purple);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .thumb-bg {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; opacity: .25;
+  }
+
+  .thumb-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,140,0,.1), rgba(26,10,46,.5));
+  }
+
+  .play-btn {
+    position: relative; z-index: 1;
+    width: 48px; height: 48px;
+    background: rgba(255,140,0,.85);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 20px rgba(255,140,0,.4);
+    transition: transform .2s;
+  }
+  .video-card:hover .play-btn { transform: scale(1.1); }
+
+  .video-badge {
+    position: absolute; top: .6rem; right: .6rem; z-index: 1;
+    background: rgba(10,6,18,.8);
+    color: var(--marigold);
+    font-size: .65rem; padding: .25rem .55rem;
+    border-radius: 20px;
+    font-family: 'Cinzel', serif; letter-spacing: .06em;
+  }
+
+  .video-info { padding: 1rem; }
+
+  .video-tag {
+    font-size: .65rem; color: var(--saffron);
+    text-transform: uppercase; letter-spacing: .12em;
+    font-family: 'Cinzel', serif;
+    margin-bottom: .4rem;
+  }
+
+  .video-title {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    color: var(--pale-gold);
+    line-height: 1.45;
+    margin-bottom: .5rem;
+  }
+
+  .video-meta {
+    font-size: .72rem; color: var(--silver-mist);
+    display: flex; gap: .8rem;
+  }
+
+  /* ── SERVICES ── */
+  .services-section {
+    position: relative; z-index: 1;
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px; margin: 0 auto;
+  }
+
+  .service-card {
+    background: rgba(26,10,46,.5);
+    border: 1px solid rgba(212,160,23,.12);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    transition: border-color .25s, background .25s;
+  }
+  .service-card:hover {
+    border-color: rgba(255,140,0,.4);
+    background: rgba(255,140,0,.06);
+  }
+
+  .service-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+
+  .service-name {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--pale-gold);
+    margin-bottom: .5rem;
+  }
+
+  .service-desc {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .83rem; color: var(--silver-mist);
+    line-height: 1.7;
+  }
+
+  /* ── HOST ── */
+  .host-section {
+    position: relative; z-index: 1;
+    padding: 5rem 1.5rem;
+    background: rgba(26,10,46,.35);
+    display: flex; align-items: center; justify-content: center;
+    gap: 4rem; flex-wrap: wrap; text-align: left;
+  }
+
+  .host-avatar {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--saffron), var(--cosmic-purple));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+    box-shadow: 0 0 48px rgba(255,140,0,.25);
+    flex-shrink: 0;
+    border: 2px solid rgba(212,160,23,.3);
+  }
+
+  .host-info { max-width: 440px; }
+
+  .host-title {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem; letter-spacing: .25em;
+    color: var(--marigold); text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+
+  .host-name {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 700; color: var(--pale-gold);
+    margin-bottom: .75rem;
+  }
+
+  .host-bio {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); line-height: 1.8;
+    font-size: .95rem; margin-bottom: 1.5rem;
+  }
+
+  .host-badges {
+    display: flex; gap: .75rem; flex-wrap: wrap;
+  }
+
+  .badge {
+    border: 1px solid rgba(212,160,23,.3);
+    color: var(--pale-gold);
+    padding: .35rem .9rem;
+    border-radius: 20px;
+    font-size: .73rem;
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+  }
+
+  /* ── SUBSCRIBE ── */
+  .subscribe-section {
+    position: relative; z-index: 1;
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+
+  .subscribe-box {
+    max-width: 560px; margin: 0 auto;
+    background: rgba(26,10,46,.7);
+    border: 1px solid rgba(212,160,23,.25);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+  }
+
+  .subscribe-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  .subscribe-title {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--pale-gold);
+    margin-bottom: .5rem;
+  }
+
+  .subscribe-body {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); font-size: .9rem;
+    line-height: 1.75; margin-bottom: 1.75rem;
+  }
+
+  .subscribe-btn {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: linear-gradient(135deg, #FF0000, #CC0000);
+    color: #fff;
+    padding: .9rem 2.5rem;
+    border-radius: 30px;
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(255,0,0,.3);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .subscribe-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(255,0,0,.45); }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 1;
+    padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(212,160,23,.15);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); font-size: .82rem;
+  }
+
+  .footer-socials { display: flex; gap: 1rem; }
+  .footer-socials a {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(212,160,23,.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--silver-mist); text-decoration: none; font-size: .85rem;
+    transition: border-color .2s, color .2s;
+  }
+  .footer-socials a:hover { border-color: var(--marigold); color: var(--marigold); }
+
+  /* ── RESPONSIVE ── */
+  /* ── RAHU DOSH SECTION ── */
+  .rahu-section {
+    position: relative; z-index: 1;
+    padding: 5rem 1.5rem;
+    background: linear-gradient(180deg, rgba(10,6,18,0) 0%, rgba(40,5,5,.25) 40%, rgba(10,6,18,0) 100%);
+  }
+
+  .rahu-header {
+    text-align: center; margin-bottom: 3.5rem;
+  }
+
+  .rahu-main-title {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 700;
+    background: linear-gradient(160deg, #fff 10%, #FFB3B3 50%, #CC2200 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: .3rem;
+  }
+
+  .rahu-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem; letter-spacing: .12em;
+    color: #FF6B6B; margin-bottom: 1.2rem;
+  }
+
+  .rahu-intro {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    max-width: 620px; margin: 0 auto;
+    color: var(--silver-mist); line-height: 1.85; font-size: .98rem;
+  }
+  .rahu-intro strong { color: #FF8080; }
+
+  /* Wide card */
+  .rahu-card-wide {
+    max-width: 800px; margin: 0 auto 3.5rem;
+    background: rgba(80,10,10,.3);
+    border: 1px solid rgba(200,50,50,.2);
+    border-radius: 16px; padding: 2.2rem 2.5rem;
+    display: flex; gap: 1.5rem; align-items: flex-start;
+  }
+
+  .rahu-card-icon { font-size: 2.5rem; flex-shrink: 0; margin-top: .2rem; }
+
+  .rahu-card-title {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.25rem; font-weight: 600;
+    color: #FF8080; margin-bottom: .6rem;
+  }
+
+  .rahu-card-text {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); line-height: 1.85; font-size: .95rem;
+  }
+
+  /* Sub headings */
+  .rahu-sub-heading {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.4rem; font-weight: 600;
+    color: var(--pale-gold);
+    text-align: center;
+    margin: 3rem 0 1.5rem;
+    position: relative;
+  }
+  .rahu-sub-heading::after {
+    content: '';
+    display: block; width: 60px; height: 2px;
+    background: linear-gradient(90deg, #CC2200, #FF8C00);
+    margin: .6rem auto 0;
+    border-radius: 2px;
+  }
+
+  /* Types grid */
+  .rahu-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.2rem; max-width: 950px; margin: 0 auto;
+  }
+
+  .rahu-type-card {
+    border-radius: 12px; padding: 1.4rem;
+    border: 1px solid rgba(200,50,50,.15);
+    transition: transform .25s, border-color .25s;
+  }
+  .rahu-type-card:hover { transform: translateY(-3px); border-color: rgba(200,50,50,.4); }
+
+  .rahu-type-1 { background: rgba(80,10,10,.3); }
+  .rahu-type-2 { background: rgba(20,20,80,.3); }
+  .rahu-type-3 { background: rgba(80,30,10,.3); }
+  .rahu-type-4 { background: rgba(20,60,20,.3); }
+  .rahu-type-5 { background: rgba(60,10,60,.3); }
+  .rahu-type-6 { background: rgba(30,30,60,.3); }
+
+  .rahu-type-icon { font-size: 1.6rem; margin-bottom: .5rem; }
+  .rahu-type-card h4 {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    color: #FF9090; margin-bottom: .5rem;
+  }
+  .rahu-type-card p {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .82rem; color: var(--silver-mist); line-height: 1.7;
+  }
+
+  /* House grid */
+  .rahu-house-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem; max-width: 950px; margin: 0 auto;
+  }
+
+  .rahu-house {
+    background: rgba(26,10,46,.5);
+    border: 1px solid rgba(212,160,23,.1);
+    border-radius: 10px; padding: 1rem;
+    display: flex; gap: .75rem; align-items: flex-start;
+    transition: border-color .2s;
+  }
+  .rahu-house:hover { border-color: rgba(200,50,50,.3); }
+
+  .house-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem; color: #FF6B6B;
+    flex-shrink: 0; line-height: 1;
+    margin-top: .1rem;
+  }
+
+  .rahu-house strong {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .85rem; color: var(--pale-gold);
+    display: block; margin-bottom: .3rem;
+  }
+
+  .rahu-house p {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .78rem; color: var(--silver-mist); line-height: 1.6;
+  }
+
+  /* Symptoms */
+  .rahu-symptoms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: .85rem; max-width: 950px; margin: 0 auto;
+  }
+
+  .symptom-item {
+    display: flex; gap: .75rem; align-items: flex-start;
+    background: rgba(80,10,10,.2);
+    border: 1px solid rgba(200,50,50,.12);
+    border-radius: 10px; padding: .9rem 1rem;
+  }
+
+  .symptom-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #CC2200; flex-shrink: 0; margin-top: .3rem;
+  }
+
+  .symptom-item p {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .85rem; color: var(--silver-mist); line-height: 1.65;
+  }
+
+  /* Remedies */
+  .rahu-remedies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.2rem; max-width: 950px; margin: 0 auto;
+  }
+
+  .remedy-card {
+    background: linear-gradient(135deg, rgba(26,10,46,.7), rgba(10,6,18,.7));
+    border: 1px solid rgba(212,160,23,.15);
+    border-radius: 14px; padding: 1.5rem;
+    transition: border-color .25s, transform .25s;
+  }
+  .remedy-card:hover { border-color: rgba(255,140,0,.35); transform: translateY(-3px); }
+
+  .remedy-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem; color: var(--marigold);
+    margin-bottom: .6rem;
+  }
+
+  .remedy-card h4 {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .95rem; font-weight: 600;
+    color: var(--pale-gold); margin-bottom: .5rem;
+  }
+
+  .remedy-card p {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: .82rem; color: var(--silver-mist); line-height: 1.7;
+  }
+
+  .mantra-box {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    background: rgba(255,140,0,.08);
+    border: 1px solid rgba(255,140,0,.25);
+    border-radius: 8px; padding: .6rem .9rem;
+    color: var(--marigold); font-size: .88rem;
+    margin-bottom: .6rem; letter-spacing: .04em;
+    text-align: center;
+  }
+
+  /* Special kaal sarp box */
+  .rahu-special-box {
+    max-width: 800px; margin: 3rem auto 0;
+    background: rgba(10,6,18,.8);
+    border: 1px solid rgba(200,50,50,.3);
+    border-radius: 16px; padding: 2rem 2.5rem;
+    text-align: center;
+  }
+
+  .special-icon { font-size: 2rem; margin-bottom: .75rem; }
+
+  .rahu-special-box h3 {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.2rem; font-weight: 600;
+    color: #FF8080; margin-bottom: .75rem;
+  }
+
+  .rahu-special-box p {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); line-height: 1.85; font-size: .9rem;
+  }
+  .rahu-special-box strong { color: #FF9090; }
+
+  /* CTA box */
+  .rahu-cta-box {
+    max-width: 620px; margin: 3rem auto 0;
+    background: linear-gradient(135deg, rgba(80,10,10,.4), rgba(26,10,46,.6));
+    border: 1px solid rgba(200,50,50,.3);
+    border-radius: 20px; padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .rahu-cta-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: .68rem; letter-spacing: .25em;
+    color: #FF6B6B; text-transform: uppercase;
+    margin-bottom: .75rem;
+  }
+
+  .rahu-cta-box h3 {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--pale-gold); margin-bottom: .6rem;
+  }
+
+  .rahu-cta-box p {
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    color: var(--silver-mist); font-size: .88rem;
+    line-height: 1.75; margin-bottom: 1.5rem;
+  }
+
+  .rahu-cta-btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: linear-gradient(135deg, #CC2200, #FF4400);
+    color: #fff; padding: .85rem 2rem;
+    border-radius: 30px;
+    font-family: 'Noto Sans Gurmukhi', sans-serif;
+    font-weight: 600; font-size: .95rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(200,30,0,.35);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .rahu-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(200,30,0,.5); }
+
+  @media (max-width: 640px) {
+    nav { padding: .8rem 1rem; }
+    .nav-links { display: none; }
+    .mandala { width: 320px; height: 320px; }
+    .host-section { text-align: center; justify-content: center; }
+    .host-badges { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mandala { animation: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="brand-icon">🔯</div>
+    <div>
+      <div class="brand-name">ਤਾਰਿਆਂ ਦੀ ਗੱਲ</div>
+      <div class="brand-sub">Astrology in Punjabi</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#rashifal">ਰਾਸ਼ੀਫਲ</a></li>
+    <li><a href="#videos">ਵੀਡੀਓਜ਼</a></li>
+    <li><a href="#host">ਸਾਡੇ ਬਾਰੇ</a></li>
+    <li><a href="https://youtube.com" class="nav-cta">▶ Subscribe</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="mandala"></div>
+  <p class="hero-eyebrow">✦ ਪੰਜਾਬੀ ਜੋਤਿਸ਼ ਚੈਨਲ ✦</p>
+  <h1 class="hero-title">ਤਾਰਿਆਂ ਦੀ ਗੱਲ</h1>
+  <p class="hero-sub">Tāriāṃ dī Gall</p>
+  <p class="hero-desc">ਗ੍ਰਹਾਂ ਦੀਆਂ ਚਾਲਾਂ, ਰਾਸ਼ੀਫਲ ਅਤੇ ਕੁੰਡਲੀ ਦੇ ਰਹੱਸ — ਆਪਣੀ ਮਾਂ-ਬੋਲੀ ਪੰਜਾਬੀ ਵਿੱਚ।</p>
+  <div class="hero-buttons">
+    <a href="https://youtube.com" class="btn-primary">▶ ਚੈਨਲ ਦੇਖੋ</a>
+    <a href="#rashifal" class="btn-secondary">ਰਾਸ਼ੀਫਲ ਜਾਣੋ</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">50K+</div>
+      <div class="stat-label">Subscribers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">200+</div>
+      <div class="stat-label">ਵੀਡੀਓਜ਼</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">12</div>
+      <div class="stat-label">ਰਾਸ਼ੀਆਂ</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ZODIAC / RASHI SECTION -->
+<section class="zodiac-section" id="rashifal">
+  <p class="section-eyebrow">✦ ਬਾਰਾਂ ਰਾਸ਼ੀਆਂ ✦</p>
+  <h2 class="section-title">ਤੁਹਾਡੀ ਰਾਸ਼ੀ ਚੁਣੋ</h2>
+  <p class="section-body">ਹਰ ਰਾਸ਼ੀ ਲਈ ਵੱਖਰੀ ਵੀਡੀਓ — ਹਫਤਾਵਾਰੀ ਅਤੇ ਮਹੀਨਾਵਾਰੀ ਰਾਸ਼ੀਫਲ ਪੰਜਾਬੀ ਵਿੱਚ।</p>
+  <div class="rashi-grid">
+    <div class="rashi-card"><div class="rashi-symbol">♈</div><div class="rashi-name">ਮੇਖ</div><div class="rashi-en">Aries</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♉</div><div class="rashi-name">ਬ੍ਰਿਸ਼ਭ</div><div class="rashi-en">Taurus</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♊</div><div class="rashi-name">ਮਿਥੁਨ</div><div class="rashi-en">Gemini</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♋</div><div class="rashi-name">ਕਰਕ</div><div class="rashi-en">Cancer</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♌</div><div class="rashi-name">ਸਿੰਘ</div><div class="rashi-en">Leo</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♍</div><div class="rashi-name">ਕੰਨਿਆ</div><div class="rashi-en">Virgo</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♎</div><div class="rashi-name">ਤੁਲਾ</div><div class="rashi-en">Libra</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♏</div><div class="rashi-name">ਵ੍ਰਿਸ਼ਚਿਕ</div><div class="rashi-en">Scorpio</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♐</div><div class="rashi-name">ਧਨੁ</div><div class="rashi-en">Sagittarius</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♑</div><div class="rashi-name">ਮਕਰ</div><div class="rashi-en">Capricorn</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♒</div><div class="rashi-name">ਕੁੰਭ</div><div class="rashi-en">Aquarius</div></div>
+    <div class="rashi-card"><div class="rashi-symbol">♓</div><div class="rashi-name">ਮੀਨ</div><div class="rashi-en">Pisces</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VIDEOS -->
+<section class="videos-section" id="videos">
+  <p class="section-eyebrow">✦ ਤਾਜ਼ੀਆਂ ਵੀਡੀਓਜ਼ ✦</p>
+  <h2 class="section-title" style="margin-bottom:2.5rem">ਹਾਲੀਆ ਵੀਡੀਓਜ਼</h2>
+  <div class="video-grid">
+    <div class="video-card">
+      <div class="video-thumb">
+        <div class="thumb-bg">♄</div>
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+        <div class="video-badge">NEW</div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">ਹਫਤਾਵਾਰੀ ਰਾਸ਼ੀਫਲ</div>
+        <div class="video-title">ਸ਼ਨੀ ਦੀ ਢੱਈਆ — ਇਸ ਹਫਤੇ ਕਿਹੜੀਆਂ ਰਾਸ਼ੀਆਂ ਲਈ ਸ਼ੁਭ?</div>
+        <div class="video-meta"><span>3 ਦਿਨ ਪਹਿਲਾਂ</span><span>• 12K ਦ੍ਰਿਸ਼</span></div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb">
+        <div class="thumb-bg">🌕</div>
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+        <div class="video-badge">LIVE</div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">ਗ੍ਰਹਿਣ</div>
+        <div class="video-title">ਪੂਰਨਮਾਸ਼ੀ ਦਾ ਚੰਦਰ ਗ੍ਰਹਿਣ — ਤੁਹਾਡੀ ਕੁੰਡਲੀ ਤੇ ਅਸਰ</div>
+        <div class="video-meta"><span>1 ਹਫਤਾ ਪਹਿਲਾਂ</span><span>• 28K ਦ੍ਰਿਸ਼</span></div>
+      </div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb">
+        <div class="thumb-bg">♃</div>
+        <div class="thumb-overlay"></div>
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-info">
+        <div class="video-tag">ਗ੍ਰਹਿ ਗੋਚਰ</div>
+        <div class="video-title">ਗੁਰੂ ਗ੍ਰਹਿ ਦਾ ਰਾਸ਼ੀ ਪਰਿਵਰਤਨ — 2026 ਦਾ ਸਭ ਤੋਂ ਵੱਡਾ ਬਦਲਾਅ</div>
+        <div class="video-meta"><span>2 ਹਫਤੇ ਪਹਿਲਾਂ</span><span>• 45K ਦ੍ਰਿਸ਼</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <p class="section-eyebrow">✦ ਸੇਵਾਵਾਂ ✦</p>
+  <h2 class="section-title">ਅਸੀਂ ਕੀ ਦੱਸਦੇ ਹਾਂ</h2>
+  <p class="section-body" style="margin:0 auto 3rem">ਵੈਦਿਕ ਜੋਤਿਸ਼ ਦੀਆਂ ਡੂੰਘੀਆਂ ਗੱਲਾਂ — ਸਰਲ ਪੰਜਾਬੀ ਵਿੱਚ।</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📅</div>
+      <div class="service-name">ਰੋਜ਼ਾਨਾ ਰਾਸ਼ੀਫਲ</div>
+      <div class="service-desc">ਹਰ ਰੋਜ਼ ਸਵੇਰੇ ਤੁਹਾਡੇ ਦਿਨ ਦੀ ਜਾਣਕਾਰੀ।</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🗺️</div>
+      <div class="service-name">ਕੁੰਡਲੀ ਵਿਸ਼ਲੇਸ਼ਣ</div>
+      <div class="service-desc">ਜਨਮ ਕੁੰਡਲੀ ਦੀ ਪੂਰੀ ਵਿਆਖਿਆ।</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💍</div>
+      <div class="service-name">ਵਿਆਹ ਮਿਲਾਨ</div>
+      <div class="service-desc">ਗੁਣ ਮਿਲਾਨ ਅਤੇ ਕੁੰਡਲੀ ਮਿਲਾਨ।</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💎</div>
+      <div class="service-name">ਰਤਨ ਸਲਾਹ</div>
+      <div class="service-desc">ਕਿਹੜਾ ਰਤਨ ਤੁਹਾਡੇ ਲਈ ਸ਼ੁਭ ਹੈ।</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RAHU DOSH -->
+<section class="rahu-section" id="rahu-dosh">
+
+  <!-- Section Header -->
+  <div class="rahu-header">
+    <p class="section-eyebrow">✦ ਵੈਦਿਕ ਜੋਤਿਸ਼ ✦</p>
+    <h2 class="rahu-main-title">ਰਾਹੁ ਦੋਸ਼</h2>
+    <p class="rahu-subtitle">Rahu Dosh — ਸੰਪੂਰਨ ਜਾਣਕਾਰੀ</p>
+    <p class="rahu-intro">ਰਾਹੁ ਇੱਕ ਛਾਇਆ ਗ੍ਰਹਿ ਹੈ ਜੋ ਕੁੰਡਲੀ ਵਿੱਚ ਬਹੁਤ ਮਹੱਤਵਪੂਰਨ ਸਥਾਨ ਰੱਖਦਾ ਹੈ। ਜਦੋਂ ਰਾਹੁ ਕਿਸੇ ਖਾਸ ਭਾਵ ਜਾਂ ਗ੍ਰਹਿ ਨਾਲ ਮਿਲ ਕੇ ਮਾੜਾ ਪ੍ਰਭਾਵ ਪਾਉਂਦਾ ਹੈ, ਤਾਂ ਉਸਨੂੰ <strong>ਰਾਹੁ ਦੋਸ਼</strong> ਕਿਹਾ ਜਾਂਦਾ ਹੈ।</p>
+  </div>
+
+  <!-- What is Rahu -->
+  <div class="rahu-card-wide">
+    <div class="rahu-card-icon">🐍</div>
+    <h3 class="rahu-card-title">ਰਾਹੁ ਕੀ ਹੈ?</h3>
+    <p class="rahu-card-text">ਰਾਹੁ ਨੂੰ ਉੱਤਰੀ ਚੰਦਰ ਨੋਡ (North Lunar Node) ਕਿਹਾ ਜਾਂਦਾ ਹੈ। ਇਹ ਕੋਈ ਅਸਲ ਗ੍ਰਹਿ ਨਹੀਂ ਬਲਕਿ ਇੱਕ ਗਣਿਤਕ ਬਿੰਦੂ ਹੈ ਜਿੱਥੇ ਸੂਰਜ ਅਤੇ ਚੰਦਰਮਾ ਦੇ ਰਸਤੇ ਇੱਕ ਦੂਜੇ ਨੂੰ ਕੱਟਦੇ ਹਨ। ਵੈਦਿਕ ਜੋਤਿਸ਼ ਵਿੱਚ ਰਾਹੁ ਨੂੰ ਇੱਕ ਸੱਪ ਦੇ ਸਿਰ ਵਜੋਂ ਦਰਸਾਇਆ ਗਿਆ ਹੈ। ਇਹ ਭੁਲੇਖੇ, ਇੱਛਾਵਾਂ, ਅਚਾਨਕ ਬਦਲਾਅ ਅਤੇ ਅਣਜਾਣ ਡਰਾਂ ਦਾ ਕਾਰਕ ਹੈ।</p>
+  </div>
+
+  <!-- Types -->
+  <h3 class="rahu-sub-heading">ਰਾਹੁ ਦੋਸ਼ ਦੀਆਂ ਕਿਸਮਾਂ</h3>
+  <div class="rahu-grid-3">
+    <div class="rahu-type-card rahu-type-1">
+      <div class="rahu-type-icon">☀️</div>
+      <h4>ਸੂਰਜ-ਰਾਹੁ ਦੋਸ਼</h4>
+      <p>ਜਦੋਂ ਰਾਹੁ ਸੂਰਜ ਦੇ ਨਾਲ ਇੱਕੋ ਭਾਵ ਵਿੱਚ ਹੋਵੇ। ਇਸ ਨਾਲ ਪਿਤਾ ਨਾਲ ਸੰਬੰਧਾਂ ਵਿੱਚ ਮੁਸ਼ਕਲ, ਸਰਕਾਰੀ ਕੰਮਾਂ ਵਿੱਚ ਅੜਚਨਾਂ ਅਤੇ ਸਿਹਤ ਸਮੱਸਿਆਵਾਂ ਆਉਂਦੀਆਂ ਹਨ।</p>
+    </div>
+    <div class="rahu-type-card rahu-type-2">
+      <div class="rahu-type-icon">🌙</div>
+      <h4>ਚੰਦਰ-ਰਾਹੁ ਦੋਸ਼ (ਗ੍ਰਹਿਣ ਯੋਗ)</h4>
+      <p>ਜਦੋਂ ਰਾਹੁ ਚੰਦਰਮਾ ਨਾਲ ਹੋਵੇ। ਮਾਨਸਿਕ ਤਣਾਅ, ਮਾਂ ਨਾਲ ਕਲੇਸ਼, ਨੀਂਦ ਦੀਆਂ ਸਮੱਸਿਆਵਾਂ ਅਤੇ ਭਾਵਨਾਤਮਕ ਅਸਥਿਰਤਾ ਆਉਂਦੀ ਹੈ।</p>
+    </div>
+    <div class="rahu-type-card rahu-type-3">
+      <div class="rahu-type-icon">♂️</div>
+      <h4>ਅੰਗਾਰਕ ਦੋਸ਼ (ਮੰਗਲ-ਰਾਹੁ)</h4>
+      <p>ਜਦੋਂ ਮੰਗਲ ਅਤੇ ਰਾਹੁ ਇਕੱਠੇ ਹੋਣ। ਇਹ ਬਹੁਤ ਖਤਰਨਾਕ ਦੋਸ਼ ਮੰਨਿਆ ਜਾਂਦਾ ਹੈ। ਦੁਰਘਟਨਾਵਾਂ, ਕਾਨੂੰਨੀ ਝਮੇਲੇ ਅਤੇ ਗੁੱਸੇ ਦੀਆਂ ਸਮੱਸਿਆਵਾਂ ਹੁੰਦੀਆਂ ਹਨ।</p>
+    </div>
+    <div class="rahu-type-card rahu-type-4">
+      <div class="rahu-type-icon">♃</div>
+      <h4>ਗੁਰੂ-ਚਾਂਡਾਲ ਦੋਸ਼</h4>
+      <p>ਜਦੋਂ ਗੁਰੂ (ਜੁਪੀਟਰ) ਅਤੇ ਰਾਹੁ ਇਕੱਠੇ ਹੋਣ। ਧਾਰਮਿਕ ਗਿਆਨ ਵਿੱਚ ਭਟਕਣ, ਗੁਰੂ ਦੀ ਅਵੱਗਿਆ ਅਤੇ ਨੈਤਿਕ ਪਤਨ ਹੁੰਦਾ ਹੈ।</p>
+    </div>
+    <div class="rahu-type-card rahu-type-5">
+      <div class="rahu-type-icon">♀️</div>
+      <h4>ਸ਼ੁੱਕਰ-ਰਾਹੁ ਦੋਸ਼</h4>
+      <p>ਜਦੋਂ ਸ਼ੁੱਕਰ ਅਤੇ ਰਾਹੁ ਇਕੱਠੇ ਹੋਣ। ਪ੍ਰੇਮ ਸੰਬੰਧਾਂ ਵਿੱਚ ਮੁਸ਼ਕਲਾਂ, ਵਿਆਹੁਤਾ ਜੀਵਨ ਵਿੱਚ ਕਲੇਸ਼ ਅਤੇ ਧਨ ਨੁਕਸਾਨ ਦਾ ਖਤਰਾ ਰਹਿੰਦਾ ਹੈ।</p>
+    </div>
+    <div class="rahu-type-card rahu-type-6">
+      <div class="rahu-type-icon">♄</div>
+      <h4>ਸ਼ਨੀ-ਰਾਹੁ ਦੋਸ਼</h4>
+      <p>ਜਦੋਂ ਸ਼ਨੀ ਅਤੇ ਰਾਹੁ ਇਕੱਠੇ ਹੋਣ। ਕੈਰੀਅਰ ਵਿੱਚ ਅੜਚਨਾਂ, ਪੁਰਾਣੇ ਕਰਮਾਂ ਦਾ ਬੋਝ ਅਤੇ ਲੰਮੀ ਬਿਮਾਰੀਆਂ ਆਉਂਦੀਆਂ ਹਨ।</p>
+    </div>
+  </div>
+
+  <!-- Effects by House -->
+  <h3 class="rahu-sub-heading">ਕੁੰਡਲੀ ਦੇ ਭਾਵਾਂ ਵਿੱਚ ਰਾਹੁ ਦਾ ਪ੍ਰਭਾਵ</h3>
+  <div class="rahu-house-grid">
+    <div class="rahu-house"><span class="house-num">੧</span><div><strong>ਪਹਿਲਾ ਭਾਵ</strong><p>ਸ਼ਖਸੀਅਤ ਵਿੱਚ ਭੰਬਲਭੂਸਾ, ਸਿਹਤ ਸਮੱਸਿਆਵਾਂ, ਅਣਜਾਣ ਡਰ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੨</span><div><strong>ਦੂਜਾ ਭਾਵ</strong><p>ਧਨ ਦੀ ਅਸਥਿਰਤਾ, ਪਰਿਵਾਰਕ ਕਲੇਸ਼, ਮੂੰਹ ਦੀਆਂ ਬਿਮਾਰੀਆਂ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੩</span><div><strong>ਤੀਜਾ ਭਾਵ</strong><p>ਭੈਣ-ਭਰਾਵਾਂ ਨਾਲ ਵਿਵਾਦ, ਯਾਤਰਾਵਾਂ ਵਿੱਚ ਖਤਰਾ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੪</span><div><strong>ਚੌਥਾ ਭਾਵ</strong><p>ਘਰੇਲੂ ਅਸ਼ਾਂਤੀ, ਮਾਂ ਦੀ ਸਿਹਤ, ਜਾਇਦਾਦ ਵਿਵਾਦ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੫</span><div><strong>ਪੰਜਵਾਂ ਭਾਵ</strong><p>ਔਲਾਦ ਸੁੱਖ ਵਿੱਚ ਕਮੀ, ਪ੍ਰੇਮ ਵਿੱਚ ਧੋਖਾ, ਬੁੱਧੀ ਭਟਕਣ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੬</span><div><strong>ਛੇਵਾਂ ਭਾਵ</strong><p>ਦੁਸ਼ਮਣਾਂ ਤੋਂ ਜਿੱਤ, ਕਰਜ਼ੇ ਅਤੇ ਬਿਮਾਰੀ ਦਾ ਖਤਰਾ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੭</span><div><strong>ਸੱਤਵਾਂ ਭਾਵ</strong><p>ਵਿਆਹੁਤਾ ਜੀਵਨ ਵਿੱਚ ਮੁਸ਼ਕਲਾਂ, ਸਾਥੀ ਧੋਖੇਬਾਜ਼</p></div></div>
+    <div class="rahu-house"><span class="house-num">੮</span><div><strong>ਅੱਠਵਾਂ ਭਾਵ</strong><p>ਅਚਾਨਕ ਦੁਰਘਟਨਾ, ਉਮਰ ਛੋਟੀ, ਗੁਪਤ ਦੁਸ਼ਮਣ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੯</span><div><strong>ਨੌਵਾਂ ਭਾਵ</strong><p>ਧਰਮ ਤੋਂ ਦੂਰੀ, ਪਿਤਾ ਨਾਲ ਮਤਭੇਦ, ਵਿਦੇਸ਼ ਯਾਤਰਾ ਵਿੱਚ ਸਮੱਸਿਆ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੧੦</span><div><strong>ਦਸਵਾਂ ਭਾਵ</strong><p>ਕੈਰੀਅਰ ਵਿੱਚ ਅਚਾਨਕ ਉਤਰਾਅ-ਚੜ੍ਹਾਅ, ਬਦਨਾਮੀ ਦਾ ਡਰ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੧੧</span><div><strong>ਗਿਆਰਵਾਂ ਭਾਵ</strong><p>ਦੋਸਤਾਂ ਤੋਂ ਧੋਖਾ, ਲਾਭ ਤਾਂ ਮਿਲਦਾ ਹੈ ਪਰ ਗਲਤ ਤਰੀਕੇ ਨਾਲ</p></div></div>
+    <div class="rahu-house"><span class="house-num">੧੨</span><div><strong>ਬਾਰਵਾਂ ਭਾਵ</strong><p>ਖਰਚੇ ਬੇਹਿਸਾਬ, ਵਿਦੇਸ਼ ਵਿੱਚ ਪਰੇਸ਼ਾਨੀ, ਨੀਂਦ ਵਿੱਚ ਡਰਾਵਣੇ ਸੁਪਨੇ</p></div></div>
+  </div>
+
+  <!-- Symptoms -->
+  <h3 class="rahu-sub-heading">ਰਾਹੁ ਦੋਸ਼ ਦੇ ਲੱਛਣ</h3>
+  <div class="rahu-symptoms-grid">
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਜ਼ਿੰਦਗੀ ਵਿੱਚ ਅਚਾਨਕ ਅਤੇ ਅਣਜਾਣ ਮੁਸੀਬਤਾਂ ਆਉਂਦੀਆਂ ਰਹਿੰਦੀਆਂ ਹਨ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਮਾਨਸਿਕ ਬੇਚੈਨੀ, ਡਰ ਅਤੇ ਘਬਰਾਹਟ ਰਹਿੰਦੀ ਹੈ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਸੁਪਨੇ ਵਿੱਚ ਸੱਪ ਦਿਖਾਈ ਦਿੰਦੇ ਹਨ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਕੰਮ ਸ਼ੁਰੂ ਕਰਨ ਤੇ ਵਾਰ-ਵਾਰ ਰੁਕਾਵਟਾਂ ਆਉਂਦੀਆਂ ਹਨ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਘਰ ਵਿੱਚ ਕਲੇਸ਼ ਅਤੇ ਝਗੜੇ ਖਤਮ ਨਹੀਂ ਹੁੰਦੇ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਸਿਰ ਦਰਦ, ਚੱਕਰ ਆਉਣੇ ਅਤੇ ਚਮੜੀ ਦੀਆਂ ਬਿਮਾਰੀਆਂ ਹੁੰਦੀਆਂ ਹਨ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਵਿਆਹ ਵਿੱਚ ਦੇਰੀ ਜਾਂ ਵਿਆਹੁਤਾ ਜੀਵਨ ਵਿੱਚ ਕੁੜੱਤਣ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਦੂਸਰੇ ਲੋਕਾਂ ਦੁਆਰਾ ਬਾਰ-ਬਾਰ ਧੋਖਾ ਮਿਲਣਾ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਅਜੀਬ ਅਤੇ ਅਣਜਾਣ ਬਿਮਾਰੀਆਂ ਜੋ ਡਾਕਟਰ ਨਹੀਂ ਸਮਝ ਪਾਉਂਦੇ</p></div>
+    <div class="symptom-item"><span class="symptom-dot"></span><p>ਮਨ ਵਿੱਚ ਨਕਾਰਾਤਮਕ ਵਿਚਾਰ ਅਤੇ ਉਦਾਸੀ ਰਹਿੰਦੀ ਹੈ</p></div>
+  </div>
+
+  <!-- Remedies -->
+  <h3 class="rahu-sub-heading">ਰਾਹੁ ਦੋਸ਼ ਦੇ ਉਪਾਅ</h3>
+  <div class="rahu-remedies-grid">
+    <div class="remedy-card">
+      <div class="remedy-num">੧</div>
+      <h4>ਰਾਹੁ ਮੰਤਰ ਜਾਪ</h4>
+      <div class="mantra-box">ॐ ਭ੍ਰਾਂ ਭ੍ਰੀਂ ਭ੍ਰੌਂ ਸਃ ਰਾਹਵੇ ਨਮਃ</div>
+      <p>ਹਰ ਸ਼ਨੀਵਾਰ ਅਤੇ ਬੁੱਧਵਾਰ ਨੂੰ 108 ਵਾਰ ਜਾਪ ਕਰੋ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੨</div>
+      <h4>ਰਤਨ ਧਾਰਨ</h4>
+      <p>ਗੋਮੇਦ (Hessonite Garnet) ਰਾਹੁ ਦਾ ਰਤਨ ਹੈ। ਪੰਡਿਤ ਜੀ ਤੋਂ ਕੁੰਡਲੀ ਵਿਖਾ ਕੇ ਸ਼ਨੀਵਾਰ ਨੂੰ ਚਾਂਦੀ ਦੀ ਮੁੰਦਰੀ ਵਿੱਚ ਮੱਧ ਉਂਗਲੀ ਵਿੱਚ ਪਾਓ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੩</div>
+      <h4>ਦਾਨ ਕਰੋ</h4>
+      <p>ਸ਼ਨੀਵਾਰ ਨੂੰ ਕਾਲੇ ਤਿਲ, ਨਾਰੀਅਲ, ਕੰਬਲ ਅਤੇ ਨੀਲੇ ਰੰਗ ਦੀਆਂ ਚੀਜ਼ਾਂ ਦਾਨ ਕਰੋ। ਗਰੀਬਾਂ ਨੂੰ ਭੋਜਨ ਕਰਾਓ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੪</div>
+      <h4>ਰਾਹੁ ਕਾਲ ਵਿੱਚ ਪੂਜਾ</h4>
+      <p>ਹਰ ਦਿਨ ਦੇ ਰਾਹੁ ਕਾਲ ਵਿੱਚ ਕੋਈ ਨਵਾਂ ਕੰਮ ਸ਼ੁਰੂ ਨਾ ਕਰੋ। ਇਸ ਸਮੇਂ ਧਿਆਨ ਅਤੇ ਪ੍ਰਾਰਥਨਾ ਕਰੋ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੫</div>
+      <h4>ਕਾਲ ਸਰਪ ਪੂਜਾ</h4>
+      <p>ਜੇ ਕੁੰਡਲੀ ਵਿੱਚ ਕਾਲ ਸਰਪ ਦੋਸ਼ ਵੀ ਹੋਵੇ ਤਾਂ ਤ੍ਰਿੰਬਕੇਸ਼ਵਰ (ਨਾਸਿਕ) ਜਾਂ ਉੱਜੈਨ ਵਿੱਚ ਕਾਲ ਸਰਪ ਦੋਸ਼ ਨਿਵਾਰਨ ਪੂਜਾ ਕਰਵਾਓ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੬</div>
+      <h4>ਦੁਰਗਾ ਮਾਤਾ ਦੀ ਅਰਾਧਨਾ</h4>
+      <p>ਰੋਜ਼ਾਨਾ ਦੁਰਗਾ ਚਾਲੀਸਾ ਪੜ੍ਹੋ। ਸ਼ੁੱਕਰਵਾਰ ਨੂੰ ਦੁਰਗਾ ਮੰਦਰ ਵਿੱਚ ਲਾਲ ਫੁੱਲ ਚੜ੍ਹਾਓ। ਰਾਹੁ ਮਾਤਾ ਦੀ ਕਿਰਪਾ ਨਾਲ ਸ਼ਾਂਤ ਹੁੰਦਾ ਹੈ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੭</div>
+      <h4>ਨਾਗ ਪੂਜਾ</h4>
+      <p>ਨਾਗ ਪੰਚਮੀ ਵਾਲੇ ਦਿਨ ਸੱਪ ਦੀ ਮੂਰਤੀ ਦੀ ਪੂਜਾ ਕਰੋ ਅਤੇ ਦੁੱਧ ਚੜ੍ਹਾਓ। ਰਾਹੁ ਦੀ ਸ਼ਾਂਤੀ ਲਈ ਇਹ ਬਹੁਤ ਪ੍ਰਭਾਵਸ਼ਾਲੀ ਉਪਾਅ ਹੈ।</p>
+    </div>
+    <div class="remedy-card">
+      <div class="remedy-num">੮</div>
+      <h4>ਰੋਜ਼ਾਨਾ ਦੇ ਉਪਾਅ</h4>
+      <p>ਨੀਲੇ ਜਾਂ ਕਾਲੇ ਰੰਗ ਦੇ ਕੱਪੜੇ ਪਾਓ। ਸ਼ਨੀਵਾਰ ਵਾਲ ਨਾ ਕੱਟੋ। ਰਾਤ ਨੂੰ ਸੌਣ ਤੋਂ ਪਹਿਲਾਂ ਸਿਰਹਾਣੇ ਹੇਠ ਤਾਂਬੇ ਦਾ ਸਿੱਕਾ ਰੱਖੋ।</p>
+    </div>
+  </div>
+
+  <!-- Kaal Sarp Dosh -->
+  <div class="rahu-special-box">
+    <div class="special-icon">🐍🌙</div>
+    <h3>ਕਾਲ ਸਰਪ ਦੋਸ਼</h3>
+    <p>ਜਦੋਂ ਕੁੰਡਲੀ ਵਿੱਚ ਸਾਰੇ ਗ੍ਰਹਿ ਰਾਹੁ ਅਤੇ ਕੇਤੂ ਦੇ ਵਿਚਕਾਰ ਆ ਜਾਂਦੇ ਹਨ, ਤਾਂ ਇਸਨੂੰ <strong>ਕਾਲ ਸਰਪ ਦੋਸ਼</strong> ਕਿਹਾ ਜਾਂਦਾ ਹੈ। ਇਹ 12 ਕਿਸਮਾਂ ਦਾ ਹੁੰਦਾ ਹੈ — ਅਨੰਤ, ਕੁਲਿਕ, ਵਾਸੁਕੀ, ਸ਼ੰਖਪਾਲ, ਪਦਮ, ਮਹਾਪਦਮ, ਤਕਸ਼ਕ, ਕਰਕੋਟਕ, ਸ਼ੰਖਚੂੜ, ਘਾਤਕ, ਵਿਸ਼ਧਰ, ਅਤੇ ਸ਼ੇਸ਼ਨਾਗ। ਕੁੰਡਲੀ ਵਿਖਾਏ ਬਿਨਾਂ ਕਦੇ ਨਾ ਮੰਨੋ ਕਿ ਤੁਹਾਡੇ ਕੁੰਡਲੀ ਵਿੱਚ ਕਾਲ ਸਰਪ ਦੋਸ਼ ਹੈ।</p>
+  </div>
+
+  <!-- Pandit CTA -->
+  <div class="rahu-cta-box">
+    <p class="rahu-cta-eyebrow">✦ ਪੰਡਿਤ ਗੁਰੂ ਜੀ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ✦</p>
+    <h3>ਕੀ ਤੁਹਾਡੀ ਕੁੰਡਲੀ ਵਿੱਚ ਰਾਹੁ ਦੋਸ਼ ਹੈ?</h3>
+    <p>ਪੰਡਿਤ ਗੁਰਦੀਪ ਸਿੰਘ (ਗੁਰੂ ਜੀ) ਤੋਂ ਆਪਣੀ ਕੁੰਡਲੀ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕਰਵਾਓ ਅਤੇ ਰਾਹੁ ਦੋਸ਼ ਦਾ ਸਹੀ ਉਪਾਅ ਜਾਣੋ।</p>
+    <a href="https://youtube.com" class="rahu-cta-btn">▶ ਵੀਡੀਓ ਦੇਖੋ — ਰਾਹੁ ਦੋਸ਼ ਨਿਵਾਰਨ</a>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- HOST -->
+<section class="host-section" id="host">
+  <div class="host-avatar">🧘</div>
+  <div class="host-info">
+    <p class="host-title">✦ ਤੁਹਾਡੇ ਜੋਤਿਸ਼ੀ ✦</p>
+    <h2 class="host-name">ਪੰਡਿਤ ਗੁਰੂ ਜੀ</h2>
+    <p style="font-family:'Noto Sans Gurmukhi',sans-serif; color:var(--marigold); font-size:.95rem; margin-bottom:.75rem; letter-spacing:.04em;">ਗੁਰਦੀਪ ਸਿੰਘ</p>
+    <p class="host-bio">
+      25 ਸਾਲਾਂ ਦੇ ਤਜਰਬੇ ਨਾਲ ਵੈਦਿਕ ਜੋਤਿਸ਼ ਅਤੇ ਕੁੰਡਲੀ ਵਿਗਿਆਨ ਵਿੱਚ ਮਾਹਰ। ਪੰਜਾਬੀ ਭਾਈਚਾਰੇ ਨੂੰ ਉਨ੍ਹਾਂ ਦੀ ਮਾਂ-ਬੋਲੀ ਵਿੱਚ ਜੋਤਿਸ਼ ਗਿਆਨ ਦੇਣਾ ਮੇਰਾ ਮਿਸ਼ਨ ਹੈ।
+    </p>
+    <div class="host-badges">
+      <span class="badge">🎓 ਜੋਤਿਸ਼ ਆਚਾਰਿਆ</span>
+      <span class="badge">📖 ਵੇਦ ਵਿਸ਼ਾਰਦ</span>
+      <span class="badge">🌟 25 ਸਾਲ ਤਜਰਬਾ</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SUBSCRIBE CTA -->
+<section class="subscribe-section">
+  <div class="subscribe-box">
+    <div class="subscribe-icon">▶️</div>
+    <h2 class="subscribe-title">ਚੈਨਲ ਸੁਬਸਕ੍ਰਾਈਬ ਕਰੋ</h2>
+    <p class="subscribe-body">ਹਰ ਹਫਤੇ ਨਵੀਆਂ ਵੀਡੀਓਜ਼ — ਰਾਸ਼ੀਫਲ, ਕੁੰਡਲੀ ਅਤੇ ਗ੍ਰਹਿ ਗੋਚਰ। ਨੋਟੀਫਿਕੇਸ਼ਨ ਬੈੱਲ ਦਬਾਉਣਾ ਨਾ ਭੁੱਲੋ! 🔔</p>
+    <a href="https://youtube.com" class="subscribe-btn">
+      <span style="font-size:1.2rem">▶</span>
+      YouTube ਤੇ Subscribe ਕਰੋ
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    © 2026 ਤਾਰਿਆਂ ਦੀ ਗੱਲ — Punjabi Astrology Channel
+  </div>
+  <div class="footer-socials">
+    <a href="#" title="YouTube">▶</a>
+    <a href="#" title="Instagram">📷</a>
+    <a href="#" title="Facebook">f</a>
+    <a href="#" title="Telegram">✈</a>
+  </div>
+</footer>
+
+</body>
+</html>
